@@ -1,25 +1,58 @@
-# Security
-Sistema de gestão usuarios.
+Sistema de gestão dos utlizadores da Pastoral.
+Será usado o serviço da Cloud do Azure
 
-# Language
-1. C#
+# Enum
+### Status
+| Variavel     | Value |
+|--------------|-------|
+| Pending      |   P   |
+| Suspended    |   S   |
+| Created      |   C   |
+| Deleted      |   D   |
 
-# Framework
-1. .NET CORE 8.0
 
-# Data Base
-1. SqlServer
+# Entities
+### Security
+| Type         | Variavel     | Descrition |
+|--------------|--------------|------------|
+| string       | Id           |            |
+| string       | Name         |            |
+| string       | Email        |            |
+| string       | Phone        |            |
+| string       | IdUser       |            |
+| Status       | Status       |            |
+| DateTime     | StartDate    |            |
+| DateTime     | EndDate      |            |
+| DateTime     | CreatedAt    |            |
+| DateTime     | UpdatedAt    |            |
+| DateTime     | DeletedAt    |            |
+| bool         | IsDeleted    |            |
 
-# Arquitectura
-1. Arquitetura Limpa (Clean Architecture)
+<br/>
 
-# Padrões
-1. CQRS
-2. Repository
+# Linguagens, Ferramentas e Tecnologias
+<div align="left">
+  <p align="left">
+    <a href="https://go-skill-icons.vercel.app/">
+      <img src="https://go-skill-icons.vercel.app/api/icons?i=cs,dotnet,sqlserver,rabbitmq,git,docker,sonarqube,swagger,postman,githubactions" />
+    </a>
+  </p>
+</div> <br/>
 
-# Container
-1. Docker
+# Monitoramento
+<div align="left">
+  <p align="left">
+    <a href="https://go-skill-icons.vercel.app/">
+      <img src="https://go-skill-icons.vercel.app/api/icons?i=prometheus,grafana" />
+    </a>
+  </p>
+</div> <br/>
 
-# Testes
-1. Unitario
-2. Integração
+# Observabilidade e Tracing
+![Jaeger_OpenTelemetry](https://github.com/user-attachments/assets/bac7e17b-c42c-48a8-83ab-c0c3c1b0f3dc)
+
+<br/>
+
+# Migration
+Add-Migration FirstMigration -o Persistence/Migrations
+Update-database
