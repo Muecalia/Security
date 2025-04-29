@@ -1,5 +1,4 @@
-Sistema de gestão dos utlizadores da Pastoral.
-Será usado o serviço da Cloud do Azure
+Sistema de gestão dos utlizadores.
 
 # Enum
 ### Status
