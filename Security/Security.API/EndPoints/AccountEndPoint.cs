@@ -20,9 +20,9 @@ namespace Security.API.EndPoints
                 return result.Succeeded ? Results.Ok(result) : Results.NotFound(result.Message);
             });
 
-            route.MapGet("/account-by-volunteer/{idVolunteer}", async (string idVolunteer, IMediator mediator, CancellationToken cancellationToken) =>
+            route.MapGet("/account-by-group/{idGroup}", async (string idGroup, IMediator mediator, CancellationToken cancellationToken) =>
             {
-                var result = await mediator.Send(new FindAccountByUserRequest(idVolunteer), cancellationToken);
+                var result = await mediator.Send(new FindAccountByGroupRequest(idGroup), cancellationToken);
                 return result.Succeeded ? Results.Ok(result) : Results.NotFound(result.Message);
             });
 

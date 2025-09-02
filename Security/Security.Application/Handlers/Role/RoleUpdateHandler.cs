@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Serilog;
 using Security.Application.Commands.Request.Role;
 using Security.Core.Configs;
 using Security.Core.Repositories;
@@ -8,24 +7,24 @@ using Security.Core.Wrappers;
 
 namespace Security.Application.Handlers.Role
 {
-    public class CreateRoleHandler(IRoleRepository repository, ILoggerService loggerService) : IRequestHandler<RoleCreateRequest, ApiResponse<string>>
+    public class RoleUpdateHandler(IRoleRepository repository, ILoggerService loggerService) : IRequestHandler<RoleUpdateRequest, ApiResponse<string>>
     {
-        public async Task<ApiResponse<string>> Handle(RoleCreateRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<string>> Handle(RoleUpdateRequest request, CancellationToken cancellationToken)
         {
             const string entidade = "perfil";
-            const string operacao = "criar";
+            const string operacao = "atualizar";
             try
             {
-                if (await repository.Exists(request.Name, cancellationToken))
+                var role = await repository.GetById(request.Id, cancellationToken);
+                if (role is null)
                 {
-                    Log.Warning(MessageError.Conflito($"{entidade} {request.Name}"));
-                    return ApiResponse<string>.Error(MessageError.Conflito(entidade));
+                    loggerService.LogWarning(MessageError.NotFound(entidade, request.Id));
+                    return ApiResponse<string>.Error(MessageError.NotFound(operacao));
                 }
 
-                var result = await repository.Create(request.Name);
-
-                var response = $"Perfil {result.Name!}";
-
+                role.Name = request.Name;
+                await repository.Update(role);
+                string response = $"Perfil {role.Name}";
                 loggerService.LogInformation(MessageError.OperacaoSucesso(entidade, operacao));
                 return ApiResponse<string>.Success(response, MessageError.OperacaoSucesso(entidade, operacao));
             }

@@ -3,7 +3,7 @@ using Security.Application.Commands.Request.Role;
 
 namespace Security.Application.Validators.Role
 {
-    public class DeleteRoleValidator : AbstractValidator<DeleteRoleRequest>
+    public class DeleteRoleValidator : AbstractValidator<RoleDeleteRequest>
     {
         public DeleteRoleValidator()
         {

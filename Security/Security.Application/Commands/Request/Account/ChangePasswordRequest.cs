@@ -4,10 +4,10 @@ using Security.Core.Wrappers;
 
 namespace Security.Application.Commands.Request.Account
 {
-    public class ChangePasswordRequest : IRequest<ApiResponse<InputAccountResponse>>
+    public class ChangePasswordRequest : IRequest<ApiResponse<string>>
     {
         public required string Id { get; set; }
-        public required string OldPassword { get; set; }
         public required string NewPassword { get; set; }
+        public required string OldPassword { get; set; }
     }
 }

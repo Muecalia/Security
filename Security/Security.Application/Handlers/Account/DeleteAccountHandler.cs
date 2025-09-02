@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Security.Application.Commands.Request.Account;
-using Security.Application.Commands.Response.Account;
 using Security.Core.Configs;
 using Security.Core.Repositories;
 using Security.Core.Services;
@@ -8,31 +7,31 @@ using Security.Core.Wrappers;
 
 namespace Security.Application.Handlers.Account
 {
-    public class DeleteAccountHandler(IAccountRepository repository, ILoggerService loggerService) : IRequestHandler<DeleteAccountRequest, ApiResponse<InputAccountResponse>>
+    public class DeleteAccountHandler(IAccountRepository repository, ILoggerService loggerService) : IRequestHandler<DeleteAccountRequest, ApiResponse<string>>
     {
-        public async Task<ApiResponse<InputAccountResponse>> Handle(DeleteAccountRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<string>> Handle(DeleteAccountRequest request, CancellationToken cancellationToken)
         {
             const string OBJECT = "conta";
             const string OPERATION = "eliminar conta";
             try
             {
-                var account = await repository.FindById(request.Id, cancellationToken);
-                if (account == null)
+                var conta = await repository.FindById(request.Id, cancellationToken);
+                if (conta == null)
                 {
                     loggerService.LogWarning(MessageError.NotFound(OBJECT, request.Id));
-                    return ApiResponse<InputAccountResponse>.Error(MessageError.NotFound(OBJECT));
+                    return ApiResponse<string>.Error(MessageError.NotFound(OBJECT));
                 }
 
-                await repository.Delete(account, cancellationToken);
-                var result = new InputAccountResponse(account.Id, account.Name, account.Email!, account.CreatedAt.ToShortDateString());
+                await repository.Delete(conta, cancellationToken);
+                var result = $"utilizador {conta.Name}";
 
-                loggerService.LogInformation(MessageError.OperacaoSucesso($"{OBJECT} {account.Name}", OPERATION));
-                return ApiResponse<InputAccountResponse>.Success(result, MessageError.OperacaoSucesso(OBJECT, OPERATION));
+                loggerService.LogInformation(MessageError.OperacaoSucesso($"{OBJECT} {conta.Name}", OPERATION));
+                return ApiResponse<string>.Success(result, MessageError.OperacaoSucesso(OBJECT, OPERATION));
             }
             catch (Exception ex)
             {
                 loggerService.LogError(MessageError.OperacaoErro(OBJECT, OPERATION), ex);
-                return ApiResponse<InputAccountResponse>.Error(MessageError.OperacaoErro(OBJECT, OPERATION));
+                return ApiResponse<string>.Error(MessageError.OperacaoErro(OBJECT, OPERATION));
             }
         }
     }

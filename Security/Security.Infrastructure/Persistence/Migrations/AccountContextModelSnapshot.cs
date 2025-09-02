@@ -184,10 +184,19 @@ namespace Security.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("IdUser")
+                    b.Property<string>("Group")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid?>("IdGroup")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("IdUser")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -245,13 +254,23 @@ namespace Security.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("Email");
+
+                    b.HasIndex("EndDate");
+
+                    b.HasIndex("Group");
+
+                    b.HasIndex("IdGroup");
 
                     b.HasIndex("IdUser");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasIndex("IsActive");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("Name");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -260,6 +279,8 @@ namespace Security.Infrastructure.Persistence.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("StartDate");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });

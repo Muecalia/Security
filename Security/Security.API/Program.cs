@@ -41,7 +41,7 @@ builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfi
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pastoral Universitaria Security", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "AEA Security", Version = "v1" });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -100,7 +100,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(myAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("http://example.com", "http://www.contoso.com")
+            //policy.WithOrigins("http://example.com", "http://www.contoso.com")
+            policy.AllowAnyOrigin()
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });

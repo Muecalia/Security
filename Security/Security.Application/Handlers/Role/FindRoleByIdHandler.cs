@@ -13,12 +13,14 @@ namespace Security.Application.Handlers.Role
         public async Task<ApiResponse<FindRoleResponse>> Handle(FindRoleByIdRequest request, CancellationToken cancellationToken)
         {
             const string Entidade = "perfil";
-
             try
             {
                 var role = await repository.GetById(request.Id, cancellationToken);
                 if (role == null)
+                {
+                    loggerService.LogWarning(MessageError.NotFound(Entidade, request.Id));
                     return ApiResponse<FindRoleResponse>.Error(MessageError.NotFound(Entidade));
+                }
 
                 var result = new FindRoleResponse(role.Id, role.Name!);
                 loggerService.LogInformation(MessageError.CarregamentoSucesso(Entidade));

@@ -7,7 +7,7 @@
         public int PageSize { get; set; } = pageSize;
         public int TotalPages { get; set; } = (int)Math.Ceiling((decimal)totalRecords / pageSize);
         public int TotalRecords { get; set; } = totalRecords;
-        public bool IsSuccess { get; set; } = isSuccess;
+        public bool Succeeded { get; set; } = isSuccess;
         public string Message { get; set; } = message;
 
         public static PagedResponse<T> Error(string message) => new(default!, 0, 0, 0, false, message);

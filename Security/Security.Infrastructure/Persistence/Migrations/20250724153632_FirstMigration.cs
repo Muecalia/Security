@@ -31,7 +31,9 @@ namespace Security.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    IdUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    IdUser = table.Column<Guid>(type: "uniqueidentifier", maxLength: 100, nullable: false),
+                    Group = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IdGroup = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -198,10 +200,29 @@ namespace Security.Infrastructure.Persistence.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_CreatedAt",
+                table: "AspNetUsers",
+                column: "CreatedAt");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_Email",
                 table: "AspNetUsers",
-                column: "Email",
-                unique: true);
+                column: "Email");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_EndDate",
+                table: "AspNetUsers",
+                column: "EndDate");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_Group",
+                table: "AspNetUsers",
+                column: "Group");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_IdGroup",
+                table: "AspNetUsers",
+                column: "IdGroup");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_IdUser",
@@ -209,10 +230,24 @@ namespace Security.Infrastructure.Persistence.Migrations
                 column: "IdUser");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_IsActive",
+                table: "AspNetUsers",
+                column: "IsActive");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_IsDeleted",
+                table: "AspNetUsers",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_Name",
                 table: "AspNetUsers",
-                column: "Name",
-                unique: true);
+                column: "Name");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_StartDate",
+                table: "AspNetUsers",
+                column: "StartDate");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",

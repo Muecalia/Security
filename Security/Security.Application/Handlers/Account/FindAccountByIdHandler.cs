@@ -8,9 +8,9 @@ using Security.Core.Wrappers;
 
 namespace Security.Application.Handlers.Account
 {
-    public class FindAccountByIdHandler(IAccountRepository repository, ILoggerService loggerService) : IRequestHandler<FindAccountByIdRequest, ApiResponse<FindAccountResponse>>
+    public class FindAccountByIdHandler(IAccountRepository repository, ILoggerService loggerService) : IRequestHandler<FindAccountByIdRequest, ApiResponse<FindAccountByIdResponse>>
     {
-        public async Task<ApiResponse<FindAccountResponse>> Handle(FindAccountByIdRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<FindAccountByIdResponse>> Handle(FindAccountByIdRequest request, CancellationToken cancellationToken)
         {
             const string OBJECT = "conta";
 
@@ -20,19 +20,19 @@ namespace Security.Application.Handlers.Account
                 if (account == null)
                 {
                     loggerService.LogWarning(MessageError.NotFound(OBJECT, request.Id));
-                    return ApiResponse<FindAccountResponse>.Error(MessageError.NotFound(OBJECT));
+                    return ApiResponse<FindAccountByIdResponse>.Error(MessageError.NotFound(OBJECT));
                 }
 
                 var roles = await repository.GetRoles(account, cancellationToken);
-                var result = new FindAccountResponse(account.Id, account.Name, account.Email!, account.PhoneNumber!, roles ?? string.Empty, account.CreatedAt.ToShortDateString());
+                var result = new FindAccountByIdResponse(account.Id, account.Name, account.IdUser.ToString()!, account.Email!, account.PhoneNumber!, account.Group!, account.IdGroup.ToString()!, roles, account.StartDate.ToShortDateString(), account.EndDate.ToShortDateString(), account.CreatedAt.ToShortDateString());
 
                 loggerService.LogInformation(MessageError.CarregamentoSucesso($"{OBJECT} {account.Name}"));
-                return ApiResponse<FindAccountResponse>.Success(result, MessageError.CarregamentoSucesso(OBJECT));
+                return ApiResponse<FindAccountByIdResponse>.Success(result, MessageError.CarregamentoSucesso(OBJECT));
             }
             catch (Exception ex)
             {
                 loggerService.LogError(MessageError.CarregamentoErro(OBJECT), ex);
-                return ApiResponse<FindAccountResponse>.Error(MessageError.CarregamentoErro(OBJECT));
+                return ApiResponse<FindAccountByIdResponse>.Error(MessageError.CarregamentoErro(OBJECT));
             }
         }
     }

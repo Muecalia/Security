@@ -10,7 +10,7 @@ namespace Security.API.EndPoints
             route.MapPost("/login", async (LoginUserRequest request, IMediator mediator, CancellationToken cancellationToken) =>
             {
                 var result = await mediator.Send(request, cancellationToken);
-                return result.Succeeded ? Results.Created("", result) : Results.BadRequest(result.Message);
+                return result.Succeeded ? Results.Ok(result) : Results.BadRequest(result.Message);
             });
         }
     }

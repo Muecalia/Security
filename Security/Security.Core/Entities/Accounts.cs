@@ -5,7 +5,9 @@ namespace Security.Core.Entities
     public class Accounts : IdentityUser
     {
         public required string Name { get; set; }
-        public required string IdUser { get; set; }
+        public Guid? IdUser { get; set; }
+        public string? Group { get; set; }
+        public Guid? IdGroup { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }

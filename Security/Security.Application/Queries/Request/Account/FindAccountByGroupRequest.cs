@@ -4,8 +4,8 @@ using Security.Core.Wrappers;
 
 namespace Security.Application.Queries.Request.Account
 {
-    public class FindAccountByUserRequest(string idVolunteer) : IRequest<ApiResponse<FindAccountResponse>>
+    public class FindAccountByGroupRequest(string idGroup) : IRequest<PagedResponse<FindAllAccountsResponse>>
     {
-        public string IdVolunteer { get; set; } = idVolunteer;
+        public string IdGroup { get; set; } = idGroup;
     }
 }

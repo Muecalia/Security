@@ -3,7 +3,7 @@ using Security.Application.Commands.Request.Role;
 
 namespace Security.Application.Validators.Role
 {
-    public class CreateRoleValidator : AbstractValidator<CreateRoleRequest>
+    public class CreateRoleValidator : AbstractValidator<RoleCreateRequest>
     {
         public CreateRoleValidator()
         {
