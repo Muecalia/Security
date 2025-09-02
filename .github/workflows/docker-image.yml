@@ -1,0 +1,33 @@
+name: Docker Image CI
+#name: Docker Build and Push to Docker Hub
+
+on:
+  workflow_run:
+    workflows: [".NET"]
+    types:
+      - completed
+      
+jobs:
+
+  build:
+    name: push docker image to docker hub
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: login to docker hub
+      id: docker-hub
+      env:
+         username: ${{secrets.DOCKERHUB_USERNAME}}
+         password: ${{secrets.DOCKERHUB_TOKEN }}
+      run: |
+         docker login -u $username -p $password 
+   
+    - name: Build the Docker image
+      run: docker build ./Security/ -t ${{secrets.DOCKERHUB_USERNAME}}/aea_security:1.0
+
+    - name: push the docker image
+      id: push-docker-image
+      run: docker push ${{secrets.DOCKERHUB_USERNAME}}/aea_security:1.0
