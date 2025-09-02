@@ -5,6 +5,7 @@ out/
 
 # Arquivos de log
 *.log
+logs/
 
 # Arquivos temporários
 *.tmp
